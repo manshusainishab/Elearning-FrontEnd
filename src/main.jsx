@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import { UserContextProvider } from "./context/UserContext.jsx";
 import { CourseContextProvider } from "./context/CourseContext.jsx";
 
-export const server = "https://elearning-platform-y9g3.onrender.com";
+export const server = "http://13.201.72.198:5000";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
