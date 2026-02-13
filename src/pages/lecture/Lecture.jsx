@@ -172,19 +172,36 @@ const Lecture = ({ user }) => {
       {loading ? (
         <Loading />
       ) : (
-        <>
-          {/* <div className="progress">
-            Lecture completed - {completedLec} out of {lectLength} <br />
-            <progress value={completed} max={100}></progress> {completed} %
-          </div> */}
-          <div className="lecture-page">
-            <div className="left">
+        <div className="lecture-page">
+          {/* Progress Bar */}
+          <div className="lecture-progress-bar">
+            <div className="container">
+              <div className="progress-info">
+                <span>
+                  {completedLec} of {lectLength} lectures completed
+                </span>
+                <span className="progress-percent">{completed}%</span>
+              </div>
+              <div className="progress-bar">
+                <div
+                  className="progress-bar-fill"
+                  style={{ width: `${completed}%` }}
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="lecture-layout">
+            {/* Video Player */}
+            <div className="lecture-main">
               {lecLoading ? (
-                <Loading />
+                <div className="lecture-loading">
+                  <Loading />
+                </div>
               ) : (
                 <>
                   {lecture.video ? (
-                    <>
+                    <div className="lecture-player">
                       <video
                         src={`${server}/${lecture.video}`}
                         width={"100%"}
@@ -195,48 +212,77 @@ const Lecture = ({ user }) => {
                         autoPlay
                         onEnded={() => addProgress(lecture._id)}
                       ></video>
-                      <h1>{lecture.title}</h1>
-                      <h3>{lecture.description}</h3>
-                    </>
+                      <div className="lecture-details">
+                        <h1>{lecture.title}</h1>
+                        <p>{lecture.description}</p>
+                      </div>
+                    </div>
                   ) : (
-                    <h1>Please Select a Lecture</h1>
+                    <div className="lecture-placeholder">
+                      <div className="empty-state">
+                        <div className="empty-state-icon">▶️</div>
+                        <p className="empty-state-title">
+                          Select a Lecture
+                        </p>
+                        <p className="empty-state-description">
+                          Choose a lecture from the sidebar to start watching
+                        </p>
+                      </div>
+                    </div>
                   )}
                 </>
               )}
             </div>
-            <div className="right">
-              {user && user.role === "admin" && (
-                <button className="common-btn" onClick={() => setShow(!show)}>
-                  {show ? "Close" : "Add Lecture +"}
-                </button>
-              )}
+
+            {/* Sidebar */}
+            <div className="lecture-sidebar">
+              <div className="sidebar-header">
+                <h3>Course Content</h3>
+                {user && user.role === "admin" && (
+                  <button
+                    className={`btn ${show ? "btn-secondary" : "btn-primary"} btn-sm`}
+                    onClick={() => setShow(!show)}
+                  >
+                    {show ? "Cancel" : "+ Add"}
+                  </button>
+                )}
+              </div>
 
               {show && (
-                <div className="lecture-form">
-                  <h2>Add Lecture</h2>
+                <div className="lecture-form animate-fade-in">
                   <form onSubmit={submitHandler}>
-                    <label htmlFor="text">Title</label>
-                    <input
-                      type="text"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      required
-                    />
+                    <div className="form-group">
+                      <label className="form-label">Title</label>
+                      <input
+                        className="form-input"
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Lecture title"
+                        required
+                      />
+                    </div>
 
-                    <label htmlFor="text">Description</label>
-                    <input
-                      type="text"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      required
-                    />
+                    <div className="form-group">
+                      <label className="form-label">Description</label>
+                      <input
+                        className="form-input"
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Brief description"
+                        required
+                      />
+                    </div>
 
-                    <input
-                      type="file"
-                      placeholder="choose video"
-                      onChange={changeVideoHandler}
-                      required
-                    />
+                    <div className="form-group form-file">
+                      <input
+                        type="file"
+                        placeholder="choose video"
+                        onChange={changeVideoHandler}
+                        required
+                      />
+                    </div>
 
                     {videoPrev && (
                       <video
@@ -244,6 +290,7 @@ const Lecture = ({ user }) => {
                         alt=""
                         width={300}
                         controls
+                        className="video-preview"
                       ></video>
                     )}
 
@@ -251,55 +298,54 @@ const Lecture = ({ user }) => {
                       disabled={btnLoading}
                       type="submit"
                       className="common-btn"
+                      style={{ width: "100%", marginTop: "var(--space-3)" }}
                     >
-                      {btnLoading ? "Please Wait..." : "Add"}
+                      {btnLoading ? "Uploading..." : "Add Lecture"}
                     </button>
                   </form>
                 </div>
               )}
 
-              {lectures && lectures.length > 0 ? (
-                lectures.map((e, i) => (
-                  <>
-                    <div
-                      onClick={() => fetchLecture(e._id)}
-                      key={i}
-                      className={`lecture-number ${
-                        lecture._id === e._id && "active"
-                      }`}
-                    >
-                      {i + 1}. {e.title}{" "}
-                      {progress[0] &&
-                        progress[0].completedLectures.includes(e._id) && (
-                          <span
-                            style={{
-                              background: "red",
-                              padding: "2px",
-                              borderRadius: "6px",
-                              color: "greenyellow",
-                            }}
-                          >
-                            <TiTick />
-                          </span>
-                        )}
-                    </div>
-                    {user && user.role === "admin" && (
-                      <button
-                        className="common-btn"
-                        style={{ background: "red" }}
-                        onClick={() => deleteHandler(e._id)}
+              <div className="lecture-list">
+                {lectures && lectures.length > 0 ? (
+                  lectures.map((e, i) => (
+                    <div key={i} className="lecture-item-wrapper">
+                      <div
+                        onClick={() => fetchLecture(e._id)}
+                        className={`lecture-item ${lecture._id === e._id ? "lecture-item-active" : ""
+                          }`}
                       >
-                        Delete {e.title}
-                      </button>
-                    )}
-                  </>
-                ))
-              ) : (
-                <p>No Lectures Yet!</p>
-              )}
+                        <span className="lecture-number">{i + 1}</span>
+                        <span className="lecture-title">{e.title}</span>
+                        {progress[0] &&
+                          progress[0].completedLectures.includes(e._id) && (
+                            <span className="lecture-completed">
+                              <TiTick />
+                            </span>
+                          )}
+                      </div>
+                      {user && user.role === "admin" && (
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => deleteHandler(e._id)}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <div className="empty-state" style={{ padding: "var(--space-8)" }}>
+                    <p className="empty-state-title">No Lectures Yet</p>
+                    <p className="empty-state-description">
+                      Lectures will appear here once added
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );

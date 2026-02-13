@@ -30,58 +30,71 @@ const CourseCard = ({ course }) => {
     }
   };
   return (
-    <div className="course-card">
-      <img src={`${server}/${course.image}`} alt="" className="course-image" />
-      <h3>{course.title}</h3>
-      <p>Instructor- {course.createdBy}</p>
-      <p>Duration- {course.duration} weeks</p>
-      <p>Price- ₹{course.price}</p>
-      {isAuth ? (
-        <>
-          {user && user.role !== "admin" ? (
+    <div className="course-card card">
+      <div className="course-card-image">
+        <img src={`${server}/${course.image}`} alt={course.title} />
+        <div className="course-card-badge badge badge-primary">
+          ₹{course.price}
+        </div>
+      </div>
+      <div className="course-card-body">
+        <h3 className="course-card-title">{course.title}</h3>
+        <div className="course-card-meta">
+          <span className="course-card-instructor">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+            {course.createdBy}
+          </span>
+          <span className="course-card-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+            {course.duration} weeks
+          </span>
+        </div>
+        <div className="course-card-actions">
+          {isAuth ? (
             <>
-              {user.subscription.includes(course._id) ? (
+              {user && user.role !== "admin" ? (
+                <>
+                  {user.subscription.includes(course._id) ? (
+                    <button
+                      onClick={() => navigate(`/course/study/${course._id}`)}
+                      className="common-btn"
+                    >
+                      Continue Learning
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigate(`/course/${course._id}`)}
+                      className="common-btn"
+                    >
+                      Get Started
+                    </button>
+                  )}
+                </>
+              ) : (
                 <button
                   onClick={() => navigate(`/course/study/${course._id}`)}
                   className="common-btn"
                 >
                   Study
                 </button>
-              ) : (
-                <button
-                  onClick={() => navigate(`/course/${course._id}`)}
-                  className="common-btn"
-                >
-                  Get Started
-                </button>
               )}
             </>
           ) : (
-            <button
-              onClick={() => navigate(`/course/study/${course._id}`)}
-              className="common-btn"
-            >
-              Study
+            <button onClick={() => navigate("/login")} className="common-btn">
+              Get Started
             </button>
           )}
-        </>
-      ) : (
-        <button onClick={() => navigate("/login")} className="common-btn">
-          Get Started
-        </button>
-      )}
 
-      <br />
-
-      {user && user.role === "admin" && (
-        <button
-          onClick={() => deleteHandler(course._id)}
-          className="common-btn"
-          style={{ background: "red" }}
-        >
-          Delete
-        </button>
-      )}
+          {user && user.role === "admin" && (
+            <button
+              onClick={() => deleteHandler(course._id)}
+              className="btn btn-danger btn-sm"
+            >
+              Delete
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

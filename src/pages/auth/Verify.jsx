@@ -21,30 +21,50 @@ const Verify = () => {
   };
   return (
     <div className="auth-page">
-      <div className="auth-form">
-        <h2>Verify Account</h2>
-        <form onSubmit={submitHandler}>
-          <label htmlFor="otp">Otp</label>
-          <input
-            type="number"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            required
-          />
-          <ReCAPTCHA
-            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-            onChange={onChange}
-          />
-          ,
-          {show && (
-            <button disabled={btnLoading} type="submit" className="common-btn">
-              {btnLoading ? "Please Wait..." : "Verify"}
-            </button>
-          )}
-        </form>
-        <p>
-          Go to <Link to="/login">Login</Link> page
-        </p>
+      <div className="auth-illustration">
+        <div className="auth-illustration-content">
+          <div className="brand-symbol">θ</div>
+          <h2>Almost There!</h2>
+          <p>Verify your email to complete registration and start learning.</p>
+        </div>
+      </div>
+
+      <div className="auth-form-container">
+        <div className="auth-form">
+          <h2>Verify Account</h2>
+          <p className="auth-subtitle">Enter the OTP sent to your email address</p>
+
+          <form onSubmit={submitHandler}>
+            <div className="form-group">
+              <label htmlFor="otp">Verification Code</label>
+              <input
+                id="otp"
+                type="number"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                placeholder="Enter 6-digit OTP"
+                required
+              />
+            </div>
+
+            <div className="captcha-wrapper">
+              <ReCAPTCHA
+                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                onChange={onChange}
+              />
+            </div>
+
+            {show && (
+              <button disabled={btnLoading} type="submit" className="common-btn">
+                {btnLoading ? "Verifying..." : "Verify Account"}
+              </button>
+            )}
+          </form>
+
+          <p className="auth-footer">
+            Go to <Link to="/login">Sign In</Link> page
+          </p>
+        </div>
       </div>
     </div>
   );

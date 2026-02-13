@@ -92,36 +92,66 @@ const CourseDescription = ({ user }) => {
       ) : (
         <>
           {course && (
-            <div className="course-description">
-              <div className="course-header">
-                <img
-                  src={`${server}/${course.image}`}
-                  alt=""
-                  className="course-image"
-                />
-                <div className="course-info">
-                  <h2>{course.title}</h2>
-                  <p>Instructor: {course.createdBy}</p>
-                  <p>Duration: {course.duration} weeks</p>
+            <div className="course-detail-page">
+              <div className="container">
+                <div className="course-detail-layout">
+                  <div className="course-detail-main">
+                    <div className="course-detail-image">
+                      <img
+                        src={`${server}/${course.image}`}
+                        alt={course.title}
+                      />
+                    </div>
+
+                    <div className="course-detail-content">
+                      <h1>{course.title}</h1>
+                      <p className="course-detail-description">
+                        {course.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="course-detail-sidebar">
+                    <div className="course-sidebar-card">
+                      <div className="course-price">
+                        <span className="price-label">Price</span>
+                        <span className="price-value">₹{course.price}</span>
+                      </div>
+
+                      <div className="course-info-list">
+                        <div className="course-info-item">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                          <span>Instructor</span>
+                          <strong>{course.createdBy}</strong>
+                        </div>
+                        <div className="course-info-item">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                          <span>Duration</span>
+                          <strong>{course.duration} weeks</strong>
+                        </div>
+                      </div>
+
+                      {user && user.subscription.includes(course._id) ? (
+                        <button
+                          onClick={() =>
+                            navigate(`/course/study/${course._id}`)
+                          }
+                          className="common-btn btn-lg course-cta-btn"
+                        >
+                          Continue Learning
+                        </button>
+                      ) : (
+                        <button
+                          onClick={checkoutHandler}
+                          className="common-btn btn-lg course-cta-btn"
+                        >
+                          Enroll Now — ₹{course.price}
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <p>{course.description}</p>
-
-              <p>Let's get started with course At ₹{course.price}</p>
-
-              {user && user.subscription.includes(course._id) ? (
-                <button
-                  onClick={() => navigate(`/course/study/${course._id}`)}
-                  className="common-btn"
-                >
-                  Study
-                </button>
-              ) : (
-                <button onClick={checkoutHandler} className="common-btn">
-                  Buy Now
-                </button>
-              )}
             </div>
           )}
         </>

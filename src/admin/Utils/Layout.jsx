@@ -1,12 +1,15 @@
 import React from "react";
+import "./layout.css";
 import Sidebar from "./Sidebar";
-import "./common.css";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
-    <div className="dashboard-admin">
+    <div className="admin-layout">
       <Sidebar />
-      <div className="content">{children}</div>
+      <main className="admin-content">
+        <Outlet />
+      </main>
     </div>
   );
 };

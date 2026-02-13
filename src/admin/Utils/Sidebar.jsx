@@ -1,54 +1,54 @@
 import React from "react";
-import "./common.css";
-import { Link } from "react-router-dom";
-import { AiFillHome, AiOutlineLogout } from "react-icons/ai";
-import { FaBook, FaUserAlt } from "react-icons/fa";
+import "./sidebar.css";
+import { Link, useLocation } from "react-router-dom";
 import { UserData } from "../../context/UserContext";
+import {
+  AiFillHome,
+  AiOutlineLogout,
+} from "react-icons/ai";
+import { FaBook, FaUsers } from "react-icons/fa";
 
 const Sidebar = () => {
   const { user } = UserData();
+  const location = useLocation();
+
+  const navItems = [
+    { to: "/admin/dashboard", icon: <AiFillHome />, label: "Dashboard" },
+    { to: "/admin/course", icon: <FaBook />, label: "Courses" },
+  ];
+
+  if (user && user.mainrole === "superadmin") {
+    navItems.push({ to: "/admin/users", icon: <FaUsers />, label: "Users" });
+  }
+
   return (
-    <div className="sidebar">
-      <ul>
-        <li>
-          <Link to={"/admin/dashboard"}>
-            <div className="icon">
-              <AiFillHome />
-            </div>
-            <span>Home</span>
-          </Link>
-        </li>
+    <aside className="admin-sidebar">
+      <div className="sidebar-brand">
+        <span className="sidebar-brand-symbol">θ</span>
+        <span>Admin</span>
+      </div>
 
-        <li>
-          <Link to={"/admin/course"}>
-            <div className="icon">
-              <FaBook />
-            </div>
-            <span>Courses</span>
+      <nav className="sidebar-nav">
+        {navItems.map((item) => (
+          <Link
+            key={item.to}
+            to={item.to}
+            className={`sidebar-link ${location.pathname === item.to ? "sidebar-link-active" : ""
+              }`}
+          >
+            <span className="sidebar-icon">{item.icon}</span>
+            {item.label}
           </Link>
-        </li>
+        ))}
+      </nav>
 
-        {user && user.mainrole === "superadmin" && (
-          <li>
-            <Link to={"/admin/users"}>
-              <div className="icon">
-                <FaUserAlt />
-              </div>
-              <span>Users</span>
-            </Link>
-          </li>
-        )}
-
-        <li>
-          <Link to={"/account"}>
-            <div className="icon">
-              <AiOutlineLogout />
-            </div>
-            <span>Logout</span>
-          </Link>
-        </li>
-      </ul>
-    </div>
+      <div className="sidebar-footer">
+        <Link to="/account" className="sidebar-link">
+          <span className="sidebar-icon"><AiOutlineLogout /></span>
+          Back to App
+        </Link>
+      </div>
+    </aside>
   );
 };
 

@@ -20,6 +20,7 @@ import Lecture from "./pages/lecture/Lecture";
 import AdminDashbord from "./admin/Dashboard/AdminDashbord";
 import AdminCourses from "./admin/Courses/AdminCourses";
 import AdminUsers from "./admin/Users/AdminUsers";
+import AdminLayout from "./admin/Utils/Layout";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 
@@ -76,19 +77,24 @@ const App = () => {
               element={isAuth ? <Lecture user={user} /> : <Login />}
             />
 
+            {/* Admin routes wrapped in Layout with sidebar */}
             <Route
-              path="/admin/dashboard"
-              element={isAuth ? <AdminDashbord user={user} /> : <Login />}
-            />
-
-            <Route
-              path="/admin/course"
-              element={isAuth ? <AdminCourses user={user} /> : <Login />}
-            />
-            <Route
-              path="/admin/users"
-              element={isAuth ? <AdminUsers user={user} /> : <Login />}
-            />
+              path="/admin"
+              element={isAuth ? <AdminLayout /> : <Login />}
+            >
+              <Route
+                path="dashboard"
+                element={<AdminDashbord user={user} />}
+              />
+              <Route
+                path="course"
+                element={<AdminCourses user={user} />}
+              />
+              <Route
+                path="users"
+                element={<AdminUsers user={user} />}
+              />
+            </Route>
           </Routes>
           <Footer />
         </BrowserRouter>

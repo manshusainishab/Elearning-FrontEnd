@@ -18,35 +18,57 @@ const Login = () => {
   };
   return (
     <div className="auth-page">
-      <div className="auth-form">
-        <h2>Login</h2>
-        <form onSubmit={submitHandler}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      <div className="auth-illustration">
+        <div className="auth-illustration-content">
+          <div className="brand-symbol">θ</div>
+          <h2>Welcome Back</h2>
+          <p>Sign in to continue your learning journey and track your progress.</p>
+        </div>
+      </div>
 
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+      <div className="auth-form-container">
+        <div className="auth-form">
+          <h2>Sign In</h2>
+          <p className="auth-subtitle">Enter your credentials to access your account</p>
 
-          <button disabled={btnLoading} type="submit" className="common-btn">
-            {btnLoading ? "Please Wait..." : "Login"}
-          </button>
-        </form>
-        <p>
-          Don't have an account? <Link to="/register">Register</Link>
-        </p>
-        {/* <p>
-          <Link to="/forgot">Forgot password?</Link>
-        </p> */}
+          <form onSubmit={submitHandler}>
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            <Link to="/forgot" className="forgot-link">
+              Forgot password?
+            </Link>
+
+            <button disabled={btnLoading} type="submit" className="common-btn">
+              {btnLoading ? "Signing in..." : "Sign In"}
+            </button>
+          </form>
+
+          <p className="auth-footer">
+            Don't have an account? <Link to="/register">Create one</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

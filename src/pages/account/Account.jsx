@@ -19,52 +19,53 @@ const Account = ({ user }) => {
     navigate("/login");
   };
   return (
-    <div>
-      {user && (
-        <div className="profile">
-          <h2>My Profile</h2>
-          <div className="profile-info">
-            <p>
-              <strong>Name - {user.name}</strong>
-            </p>
+    <div className="account-page">
+      <div className="container">
+        {user && (
+          <div className="profile-card animate-fade-in-up">
+            <div className="profile-header">
+              <div className="profile-avatar">
+                {user.name ? user.name.charAt(0).toUpperCase() : "U"}
+              </div>
+              <div className="profile-details">
+                <h2>{user.name}</h2>
+                <p className="profile-email">{user.email}</p>
+                {user.role === "admin" && (
+                  <span className="badge badge-primary">Admin</span>
+                )}
+              </div>
+            </div>
 
-            <p>
-              <strong>Email - {user.email}</strong>
-            </p>
-
-            <button
-              onClick={() => navigate(`/${user._id}/dashboard`)}
-              className="common-btn"
-            >
-              <MdDashboard />
-              Dashboard
-            </button>
-
-            <br />
-
-            {user.role === "admin" && (
+            <div className="profile-actions">
               <button
-                onClick={() => navigate(`/admin/dashboard`)}
+                onClick={() => navigate(`/${user._id}/dashboard`)}
                 className="common-btn"
               >
                 <MdDashboard />
-                Admin Dashboard
+                My Dashboard
               </button>
-            )}
 
-            <br />
+              {user.role === "admin" && (
+                <button
+                  onClick={() => navigate(`/admin/dashboard`)}
+                  className="btn btn-secondary"
+                >
+                  <MdDashboard />
+                  Admin Dashboard
+                </button>
+              )}
 
-            <button
-              onClick={logoutHandler}
-              className="common-btn"
-              style={{ background: "red" }}
-            >
-              <IoMdLogOut />
-              Logout
-            </button>
+              <button
+                onClick={logoutHandler}
+                className="btn btn-danger"
+              >
+                <IoMdLogOut />
+                Logout
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

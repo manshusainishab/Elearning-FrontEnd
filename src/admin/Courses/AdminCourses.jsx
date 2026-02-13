@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Layout from "../Utils/Layout";
+import "./admincourses.css";
 import { useNavigate } from "react-router-dom";
 import { CourseData } from "../../context/CourseContext";
 import CourseCard from "../../components/coursecard/CourseCard";
-import "./admincourses.css";
-import toast from "react-hot-toast";
 import axios from "axios";
 import { server } from "../../main";
+import toast from "react-hot-toast";
 
 const categories = [
   "Web Development",
@@ -19,7 +18,7 @@ const categories = [
 const AdminCourses = ({ user }) => {
   const navigate = useNavigate();
 
-  if (user && user.role !== "admin") return navigate("/");
+  if (user && user.role !== "admin" && user.mainrole !== "superadmin") return navigate("/");
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -79,98 +78,128 @@ const AdminCourses = ({ user }) => {
       setCategory("");
     } catch (error) {
       toast.error(error.response.data.message);
+      setBtnLoading(false);
     }
   };
 
   return (
-    <Layout>
-      <div className="admin-courses">
-        <div className="left">
-          <h1>All Courses</h1>
-          <div className="dashboard-content">
-            {courses && courses.length > 0 ? (
-              courses.map((e) => {
-                return <CourseCard key={e._id} course={e} />;
-              })
-            ) : (
-              <p>No Courses Yet</p>
-            )}
-          </div>
-        </div>
+    <div className="admin-courses">
+      <div className="admin-page-header">
+        <h1>Manage Courses</h1>
+        <p>Add, edit, and manage your course catalog</p>
+      </div>
 
-        <div className="right">
-          <div className="add-course">
-            <div className="course-form">
-              <h2>Add Course</h2>
-              <form onSubmit={submitHandler}>
-                <label htmlFor="text">Title</label>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                />
-
-                <label htmlFor="text">Description</label>
-                <input
-                  type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                />
-
-                <label htmlFor="text">Price</label>
-                <input
-                  type="number"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  required
-                />
-
-                <label htmlFor="text">createdBy</label>
-                <input
-                  type="text"
-                  value={createdBy}
-                  onChange={(e) => setCreatedBy(e.target.value)}
-                  required
-                />
-
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                >
-                  <option value={""}>Select Category</option>
-                  {categories.map((e) => (
-                    <option value={e} key={e}>
-                      {e}
-                    </option>
-                  ))}
-                </select>
-
-                <label htmlFor="text">Duration</label>
-                <input
-                  type="number"
-                  value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
-                  required
-                />
-
-                <input type="file" required onChange={changeImageHandler} />
-                {imagePrev && <img src={imagePrev} alt="" width={300} />}
-
-                <button
-                  type="submit"
-                  disabled={btnLoading}
-                  className="common-btn"
-                >
-                  {btnLoading ? "Please Wait..." : "Add"}
-                </button>
-              </form>
+      {/* Add Course Form */}
+      <div className="add-course-card">
+        <h3>Add New Course</h3>
+        <form onSubmit={submitHandler} className="add-course-form">
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">Course Title</label>
+              <input
+                className="form-input"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter course title"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Instructor</label>
+              <input
+                className="form-input"
+                type="text"
+                value={createdBy}
+                onChange={(e) => setCreatedBy(e.target.value)}
+                placeholder="Instructor name"
+                required
+              />
             </div>
           </div>
+
+          <div className="form-group">
+            <label className="form-label">Description</label>
+            <input
+              className="form-input"
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Brief course description"
+              required
+            />
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">Category</label>
+              <select
+                className="form-select"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">Select Category</option>
+                {categories.map((e) => (
+                  <option value={e} key={e}>
+                    {e}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label className="form-label">Price (₹)</label>
+              <input
+                className="form-input"
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="0"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Duration (weeks)</label>
+              <input
+                className="form-input"
+                type="number"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                placeholder="0"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Cover Image</label>
+            <input type="file" required onChange={changeImageHandler} />
+          </div>
+
+          {imagePrev && (
+            <img src={imagePrev} alt="Preview" className="image-preview" />
+          )}
+
+          <button disabled={btnLoading} type="submit" className="common-btn">
+            {btnLoading ? "Adding..." : "Add Course"}
+          </button>
+        </form>
+      </div>
+
+      {/* Existing Courses */}
+      <div className="existing-courses">
+        <h3>Existing Courses ({courses ? courses.length : 0})</h3>
+        <div className="courses-grid">
+          {courses && courses.length > 0 ? (
+            courses.map((e) => <CourseCard key={e._id} course={e} />)
+          ) : (
+            <div className="empty-state">
+              <p className="empty-state-title">No courses yet</p>
+              <p className="empty-state-description">Add your first course above</p>
+            </div>
+          )}
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

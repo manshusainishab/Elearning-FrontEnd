@@ -3,8 +3,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { UserContextProvider } from "./context/UserContext.jsx";
 import { CourseContextProvider } from "./context/CourseContext.jsx";
+import "./index.css";
 
-export const server = "https://thetalearning.work.gd";
+export const server = import.meta.env.VITE_BACKEND;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

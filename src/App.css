@@ -1,27 +1,37 @@
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  font-family: Arial, sans-serif;
-}
+/* App-level overrides and common-btn compatibility */
 
 .common-btn {
-  background-color: #C39118;
-  color: white;
-  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  color: var(--color-text-inverse);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
   border: none;
-  border-radius: 5px;
-  font-size: 18px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(108, 60, 225, 0.25);
+  text-decoration: none;
+}
 
-  &:hover {
-    background-color: #5f357e;
-  }
+.common-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(108, 60, 225, 0.35);
+}
 
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
+.common-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.common-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
 }

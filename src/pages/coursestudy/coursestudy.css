@@ -1,34 +1,81 @@
+/* ============================
+   COURSE STUDY PAGE
+   ============================ */
 .course-study-page {
-    padding: 50px 0;
-    background-color: #fff9e9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 80vh;
-  
-    h2 {
-      font-size: 24px;
-      color: #C39118;
-      text-align: center;
-    }
-  
-    h4 {
-      font-size: 21px;
-      color: #141414;
-      text-align: center;
-    }
-  
-    h5 {
-      font-size: 20px;
-      color: #141414;
-      text-align: center;
-    }
-  
-    a {
-      text-decoration: none;
-      background-color: white;
-      padding: 5px 10px;
-      border: 1px solid #C39118;
-      border-radius: 5px;
-    }
+  min-height: 60vh;
+  padding: var(--space-12) 0 var(--space-20);
+}
+
+.study-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.study-image {
+  overflow: hidden;
+}
+
+.study-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.study-info {
+  padding: var(--space-10);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.study-info h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.study-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-5);
+}
+
+.study-meta {
+  display: flex;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.study-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.study-info .common-btn {
+  align-self: flex-start;
+}
+
+@media (max-width: 768px) {
+  .study-card {
+    grid-template-columns: 1fr;
   }
+
+  .study-image {
+    height: 220px;
+  }
+
+  .study-info {
+    padding: var(--space-6);
+  }
+}

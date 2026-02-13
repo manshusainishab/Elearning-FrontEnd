@@ -1,22 +1,96 @@
-.about {
-    padding: 80px 0;
-    text-align: center;
-    min-height: 55vh;
-  
-    .about-content {
-      max-width: 800px;
-      margin: 0 auto;
-  
-      h2 {
-        font-size: 32px;
-        color: #C39118;
-        margin-bottom: 20px;
-      }
-  
-      p {
-        font-size: 16px;
-        color: #141414;
-        line-height: 1.6;
-      }
-    }
+/* ============================
+   ABOUT PAGE
+   ============================ */
+.about-page {
+  min-height: 60vh;
+}
+
+.about-hero {
+  padding: var(--space-20) 0 var(--space-16);
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(108, 60, 225, 0.08) 0%, transparent 60%),
+    var(--color-bg);
+}
+
+.about-hero h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.02em;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-hero-text {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Values */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.value-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.value-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.value-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  margin: 0 auto var(--space-5);
+}
+
+.value-card h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.value-card p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-relaxed);
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    padding: var(--space-12) 0 var(--space-10);
   }
+
+  .about-hero h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+}

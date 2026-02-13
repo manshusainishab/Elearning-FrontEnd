@@ -20,14 +20,30 @@ const CourseStudy = ({ user }) => {
     <>
       {course && (
         <div className="course-study-page">
-          <img src={`${server}/${course.image}`} alt="" width={350} />
-          <h2>{course.title}</h2>
-          <h4>{course.description}</h4>
-          <h5>by - {course.createdBy}</h5>
-          <h5>Duration - {course.duration} weeks</h5>
-          <Link to={`/lectures/${course._id}`}>
-            <h2>Lectures</h2>
-          </Link>
+          <div className="container">
+            <div className="study-card animate-fade-in-up">
+              <div className="study-image">
+                <img src={`${server}/${course.image}`} alt={course.title} />
+              </div>
+              <div className="study-info">
+                <h1>{course.title}</h1>
+                <p className="study-description">{course.description}</p>
+                <div className="study-meta">
+                  <div className="study-meta-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                    <span>by {course.createdBy}</span>
+                  </div>
+                  <div className="study-meta-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                    <span>{course.duration} weeks</span>
+                  </div>
+                </div>
+                <Link to={`/lectures/${course._id}`} className="common-btn btn-lg">
+                  Start Lectures
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>

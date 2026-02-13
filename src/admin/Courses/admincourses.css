@@ -1,54 +1,60 @@
+/* ============================
+   ADMIN COURSES
+   ============================ */
 .admin-courses {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  
-    .left {
-      .dashboard-content {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 40px;
-        margin-left: 5px;
-      }
-    }
-  
-    .right {
-      .course-form {
-        background-color: #fff9e9;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        width: 300px;
-  
-        h2 {
-          font-size: 24px;
-          color: #141414;
-          margin-bottom: 15px;
-        }
-  
-        form {
-          text-align: left;
-  
-          label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 15px;
-            color: #141414;
-          }
-  
-          input,
-          select {
-            width: 92%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #fff9e9;
-            border-radius: 5px;
-          }
-        }
-      }
-    }
+  animation: fadeIn var(--transition-slow) ease-out;
+}
+
+.add-course-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  margin-bottom: var(--space-10);
+}
+
+.add-course-card h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+}
+
+.add-course-form .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.add-course-form .form-group {
+  margin-bottom: var(--space-4);
+}
+
+.image-preview {
+  width: 160px;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-border);
+}
+
+.add-course-form .common-btn {
+  margin-top: var(--space-2);
+}
+
+.existing-courses {
+  margin-top: var(--space-4);
+}
+
+.existing-courses h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 768px) {
+  .add-course-card {
+    padding: var(--space-5);
   }
+}
