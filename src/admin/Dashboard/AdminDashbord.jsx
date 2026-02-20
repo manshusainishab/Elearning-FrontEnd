@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./admindashbord.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { server } from "../../main";
+import { server } from "../../constants";
 import Loading from "../../components/loading/Loading";
 
 const AdminDashbord = ({ user }) => {

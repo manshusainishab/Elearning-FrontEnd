@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { CourseData } from "../../context/CourseContext";
 import CourseCard from "../../components/coursecard/CourseCard";
 import axios from "axios";
-import { server } from "../../main";
+import { server } from "../../constants";
 import toast from "react-hot-toast";
 
 const categories = [

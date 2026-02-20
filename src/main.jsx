@@ -5,7 +5,7 @@ import { UserContextProvider } from "./context/UserContext.jsx";
 import { CourseContextProvider } from "./context/CourseContext.jsx";
 import "./index.css";
 
-export const server = import.meta.env.VITE_BACKEND;
+import { server } from "./constants";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

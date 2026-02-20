@@ -1,6 +1,6 @@
 import React from "react";
 import "./courseCard.css";
-import { server } from "../../main";
+import { server } from "../../constants";
 import { UserData } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
